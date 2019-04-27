@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html layout:decorator="~{fragments/layout}"
+	  xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body>
+		
+		<div layout:fragment="content">
+		     <!-- Main content -->
+    		<section class="content">
+    			 <div class="row">
+   				     <div class="col-md-12">
+				       <div class="box box-info">
+				         
+				         <div class="box-header with-border">
+				           <h3 class="box-title">Cadastro de Serviço</h3>
+				         </div>
+				           
+				           <div class="box-body">
+				           	
+				          	 <form action="#">
+				          	 	
+				          	 	<div class="form-row">
+				          	 		<div class="form-group col-md-4">
+				          	 			<label for="nome" class="col-form-label-sm">Nome:</label>
+										<div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
+							               <input type="text" class="form-control" id="nome" name="nome">
+							             </div>				          	 			
+				          	 		</div>
+				          	 		
+				          	 		<div class="form-group col-md-4">
+					                    <label for="valor">Valor:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+							               <input type="text" id="valor" name="valor" class="form-control">
+							             </div>
+									</div>
+									
+									<div class="form-group col-md-4">
+					                    <label for="unidadeMedida">Unidade de medida:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-th-large	"></i></span>
+							               <select class="form-control">
+							               <option
+							               		th:each="medida : ${medidas}"
+							               		th:value="${medida.name()}"
+							               		th:text="${medida.descricao}">
+							               	</option>
+						                  </select>
+							             </div>
+									</div>
+									
+				          	 	</div>
+				          	 	
+				          	 	<div class="form-row">
+					            	
+					            	<div class="form-group col-md-12">
+					            		<label for="descricao" >Descrição:</label>
+										<textarea id="descricao" name="descrica" rows="3" class="form-control"></textarea>
+					            	</div>
+					            	
+								</div>
+				          	 	
+				          	 	<div class="row">
+				          	 		<div class="col-md-12">
+				          	 			<button class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
+				          	 		</div>
+				          	 	</div>
+				          	 	
+				          	 </form>
+				           </div><!-- ./box-body -->
+				       </div>
+				     </div>  
+    			 </div>
+    		</section>
+		</div><!-- / .content -->
+		
+	</body>
+	
+</html>
