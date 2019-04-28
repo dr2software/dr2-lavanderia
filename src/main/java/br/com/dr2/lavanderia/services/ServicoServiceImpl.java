@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import br.com.dr2.lavanderia.exception.ObjetoNaoEncontradoException;
 import br.com.dr2.lavanderia.models.Servico;
 import br.com.dr2.lavanderia.repositorys.ServicoRepository;
-import br.com.dr2.lavanderia.services.exception.ServicoService;
 
 @Service
 public class ServicoServiceImpl implements ServicoService {
