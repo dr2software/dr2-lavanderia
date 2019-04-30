@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html 
+	  xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="~{fragments/layout}">
+
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body>
+		
+		<div layout:fragment="content">
+		     <!-- Main content -->
+    		<section class="content">
+    			 <div class="row">
+   				     <div class="col-md-12">
+				       <div class="box box-info">
+				         
+				         <div class="box-header with-border">
+				           <h3 class="box-title">Consulta de Serviço(s)</h3>
+				         </div>
+				           
+			           	 <div class="box-body">
+			           	 	
+			           	 	<table id="grid-servicos" class="table table-bordered table-hover">
+			           	 		
+			           	 		<thead>
+					                <tr>
+					                  <th>Código</th>
+					                  <th>Nome</th>
+					                  <th>Unidade</th>
+					                  <th>Valor</th>
+					                  <th>Data de cadastro</th>
+					                  <th>Ações</th>
+					                </tr>
+					            </thead>
+					            
+					            <tbody>
+					            	<tr th:each="servico : ${servicos}"> 
+					            		<td> <span th:text="${servico.id}"></span> </td>
+					            		<td> <span th:text="${servico.nome}"></span> </td>
+					            		<td> <span th:text="${servico.unidadeMedida.name()}"></span> </td>
+					            		<td> <span th:text="${servico.valor}"></span> </td>
+					            		<td> <span th:text="${#dates.format(servico.dataCadastro.getTime(), 'dd/MM/yyyy')}"></span> </td>
+					            		<td>
+					            			<a th:href="@{'/servico/cadastro/'}+${servico.id}" 
+					            			   style="margin-right: 10px;" title="Editar">
+					            				<i class="fa fa-edit"></i>
+					            			</a>
+											<a th:href="@{'/servico/cadastro/excluir/'}+${servico.id}"
+												style="margin-left: 10px;" title="Excluir">
+												<i class="fa fa-remove"></i>
+											</a>
+					            		</td>
+					            	</tr>
+					            </tbody>   
+			           	 	</table>
+			           	
+			             </div><!-- ./box-body -->
+			             
+				       </div>
+				     </div>  
+    			 </div>
+    		</section>
+		</div><!-- / .content -->
+	
+    	 <th:block layout:fragment="script">
+	    	 <script>
+	    	  $(function () {
+	    	    $('#grid-servicos').DataTable({
+	    	      'paging'      : true,
+	    	      'lengthChange': true,
+	    	      'searching'   : true,
+	    	      'ordering'    : true,
+	    	      'info'        : true,
+	    	      'autoWidth'   : false
+	    	    })
+	    	  }) 
+	        </script>
+    	 </th:block>
+    	
+    	 
+    	 
+	</body>
+	
+</html>

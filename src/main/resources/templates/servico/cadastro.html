@@ -23,14 +23,17 @@
 				           
 				           <div class="box-body">
 				           	
-				          	 <form action="#">
+				          	 <form action="#" th:method="POST" th:object="${servico}" th:action="@{/servico/cadastro}">
+				          	 
+				          	 	<input type="hidden" id="id" name="id" th:field="*{id}">
 				          	 	
 				          	 	<div class="form-row">
 				          	 		<div class="form-group col-md-4">
 				          	 			<label for="nome" class="col-form-label-sm">Nome:</label>
 										<div class="input-group">
 							               <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-							               <input type="text" class="form-control" id="nome" name="nome">
+							               <input type="text" class="form-control" style="text-transform: uppercase" 
+							               		  id="nome" name="nome" th:field="*{nome}">
 							             </div>				          	 			
 				          	 		</div>
 				          	 		
@@ -38,7 +41,8 @@
 					                    <label for="valor">Valor:</label>
 					                    <div class="input-group">
 							               <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-							               <input type="text" id="valor" name="valor" class="form-control">
+							               <input type="text" id="valor" name="valor" class="form-control"
+							               		  th:field="*{valor}">
 							             </div>
 									</div>
 									
@@ -46,7 +50,8 @@
 					                    <label for="unidadeMedida">Unidade de medida:</label>
 					                    <div class="input-group">
 							               <span class="input-group-addon"><i class="fa fa-th-large	"></i></span>
-							               <select class="form-control">
+							               <select class="form-control" id="unidadeMedida" name="unidadeMedica" 
+							               		   th:field="*{unidadeMedida}" >
 							               <option
 							               		th:each="medida : ${medidas}"
 							               		th:value="${medida.name()}"
@@ -62,14 +67,15 @@
 					            	
 					            	<div class="form-group col-md-12">
 					            		<label for="descricao" >Descrição:</label>
-										<textarea id="descricao" name="descrica" rows="3" class="form-control"></textarea>
+										<textarea id="descricao" name="descrica" rows="3" class="form-control"
+												  th:field="*{descricao}"></textarea>
 					            	</div>
 					            	
 								</div>
 				          	 	
 				          	 	<div class="row">
 				          	 		<div class="col-md-12">
-				          	 			<button class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
+				          	 			<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
 				          	 		</div>
 				          	 	</div>
 				          	 	
