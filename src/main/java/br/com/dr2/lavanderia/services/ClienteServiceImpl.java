@@ -1,52 +1,5 @@
 package br.com.dr2.lavanderia.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import br.com.dr2.lavanderia.exception.ObjetoNaoEncontradoException;
-import br.com.dr2.lavanderia.models.Cliente;
-import br.com.dr2.lavanderia.repositorys.ClienteRepository;
-
-@Service
-public class ClienteServiceImpl implements ClienteService {
-	
-	@Autowired
-	private ClienteRepository clienteRepository;
-
-	@Override
-	public Cliente inserir(Cliente entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Cliente atualizar(Cliente entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Cliente buscarPorId(int id) throws ObjetoNaoEncontradoException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deletarPorId(int id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<Cliente> buscarTodos() {
-		return clienteRepository.findAll();
-	}
-
-}
-package br.com.dr2.lavanderia.services;
-
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
