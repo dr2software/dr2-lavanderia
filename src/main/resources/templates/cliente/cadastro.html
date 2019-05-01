@@ -1,76 +1,100 @@
 <!DOCTYPE html>
 <html layout:decorator="~{fragments/layout}"
-	  xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-	<head>
-		<meta charset="UTF-8">
-	</head>
-	
-	<body>
-		
-		<div layout:fragment="content">
-		     <!-- Main content -->
-    		<section class="content">
-    			 <div class="row">
-   				     <div class="col-md-12">
-				       <div class="box box-info">
-				         
-				         <div class="box-header with-border">
-				           <h3 class="box-title">Cadastro de Cliente</h3>
-				         </div>
-				           
-				           <div class="box-body">
-				           	
-				          	 <form action="#">
-				          	 	
-				          	 	<div class="form-row">
-				          	 		<div class="form-group col-md-8">
-				          	 			<label for="nome" class="col-form-label-sm">Nome/Razão Social:</label>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="box box-info">
+
+						<div class="box-header with-border">
+							<h3 class="box-title">Cadastro de Cliente</h3>
+						</div>
+
+						<div class="box-body">
+
+							<form action="#" th:method="POST" th:object="${cliente}"
+								th:action="@{/cliente/cadastro}">
+
+								<input type="hidden" id="id" name="id" th:field="*{id}">
+								<div class="form-row">
+									<div class="form-group col-md-8">
+										<label for="nome" class="col-form-label-sm">Nome/Razão
+											Social:</label>
 										<div class="input-group">
-							               <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-							               <input type="text" class="form-control" id="nome" name="nome">
-							             </div>				          	 			
-				          	 		</div>
-				          	 		
-				          	 		<div class="form-group col-md-4">
-					                    <label for="cpfOuCnpj">CPF/CNPJ:</label>
-					                    <div class="input-group">
-							               <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
-							               <input type="text" id="cpfOuCnpj" name="cpfOuCnpj" class="form-control">
-							             </div>
+											<span class="input-group-addon"><i
+												class="fa fa-asterisk"></i></span> <input type="text"
+												class="form-control" id="nome" name="nome"
+												th:field="*{nome}">
+										</div>
 									</div>
-				          	 	</div>
-				          	 	
-				          	 	<div class="form-row">
-					            	<div class="form-group col-md-8">
-					            		<label for="nomeFantasia" >Nome Fantasia:</label>
+
+									<div class="form-group col-md-4">
+										<label for="cpfOuCnpj">CPF/CNPJ:</label>
 										<div class="input-group">
-							               <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-							               <input type="text" id="nomeFantasia" name="nomeFantasia" class="form-control">
-							            </div>
-					            	</div>
-					            	
-					            	<div class="form-group col-md-4">
-					            		<label for="inscricaoEstadual">Inscrição Estadual:</label>
-										<div class="input-group">
-							               <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-							               <input type="text" id="inscricaoEstadual" name="inscricaoEstadual" class="form-control">
-							            </div>
-					            	</div>
+											<span class="input-group-addon"><i
+												class="fa fa-address-card"></i></span> <input type="text"
+												id="cpfOuCnpj" name="cpfOuCnpj" class="form-control"
+												th:field="*{cpf}">
+										</div>
+									</div>
 								</div>
-				          	 	
-				          	 </form>
-				          	 
-				           </div>
-				           
-				       </div>
-				     </div>  
-    			 </div>
-    		</section>
-		</div><!-- / .content -->
-		
-	</body>
-	
+
+								<div class="form-row">
+									<div class="form-group col-md-8">
+										<label for="nomeFantasia">Email:</label>
+										<div class="input-group">
+											<span class="input-group-addon"><i
+												class="fa fa-asterisk"></i></span> <input type="text" id="email"
+												name="email" class="form-control" th:field="*{email}">
+										</div>
+									</div>
+
+									<div class="form-group col-md-4">
+										<label for="inscricaoEstadual">Telefone:</label>
+										<div class="input-group">
+											<span class="input-group-addon"><i
+												class="fa fa-asterisk"></i></span> <input type="text" id="telefone"
+												name="telefone" class="form-control" th:field="*{telefone}" data-mask="(99)9999-9999">
+										</div>
+									</div>
+
+									<div class="form-group col-md-4">
+										<label for="inscricaoEstadual">Celular:</label>
+										<div class="input-group">
+											<span class="input-group-addon"><i
+												class="fa fa-asterisk"></i></span> <input type="text" id="celular"
+												name="celular" class="form-control" th:field="*{celular}" data-mask="(99)99999-9999">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<button type="submit" class="btn btn-primary">
+											<i class="fa fa-save"></i> Salvar
+										</button>
+									</div>
+								</div>
+							</form>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<!-- / .content -->
+
+</body>
 </html>
