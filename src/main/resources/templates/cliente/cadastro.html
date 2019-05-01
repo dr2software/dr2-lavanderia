@@ -6,6 +6,12 @@
 
 <head>
 <meta charset="UTF-8">
+<link th:href="@{../../css/table.css}" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 </head>
 
 <body>
@@ -35,7 +41,7 @@
 											<span class="input-group-addon"><i
 												class="fa fa-asterisk"></i></span> <input type="text"
 												class="form-control" id="nome" name="nome"
-												th:field="*{nome}">
+												th:field="*{nome}" required="required">
 										</div>
 									</div>
 
@@ -43,9 +49,8 @@
 										<label for="cpfOuCnpj">CPF/CNPJ:</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i
-												class="fa fa-address-card"></i></span> <input type="text"
-												id="cpfOuCnpj" name="cpfOuCnpj" class="form-control"
-												th:field="*{cpf}">
+												class="fa fa-address-card .ls-mask-cpf"></i></span> <input type="text" id="cpfcnpj"
+												name="cpf" class="form-control" th:field="*{cpf}" data-mask-for-cpf-cnpj>
 										</div>
 									</div>
 								</div>
@@ -55,7 +60,7 @@
 										<label for="nomeFantasia">Email:</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i
-												class="fa fa-asterisk"></i></span> <input type="text" id="email"
+												class="fa fa-asterisk"></i></span> <input type="email" id="email"
 												name="email" class="form-control" th:field="*{email}">
 										</div>
 									</div>
@@ -64,8 +69,9 @@
 										<label for="inscricaoEstadual">Telefone:</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i
-												class="fa fa-asterisk"></i></span> <input type="text" id="telefone"
-												name="telefone" class="form-control" th:field="*{telefone}" data-mask="(99)9999-9999">
+												class="fa fa-asterisk"></i></span> <input type="tel" id="telefone"
+												name="telefone" class="form-control" th:field="*{telefone}"
+												data-mask="(99)9999-9999">
 										</div>
 									</div>
 
@@ -73,8 +79,9 @@
 										<label for="inscricaoEstadual">Celular:</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i
-												class="fa fa-asterisk"></i></span> <input type="text" id="celular"
-												name="celular" class="form-control" th:field="*{celular}" data-mask="(99)99999-9999">
+												class="fa fa-asterisk"></i></span> <input type="tel" id="celular"
+												name="celular" class="form-control" th:field="*{celular}"
+												data-mask="(99)99999-9999">
 										</div>
 									</div>
 								</div>
@@ -95,6 +102,21 @@
 		</section>
 	</div>
 	<!-- / .content -->
-
 </body>
+<th:block layout:fragment="script">  <script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script> 
+	<script>
+	$(document).on('keydown', '[data-mask-for-cpf-cnpj]', function (e) {
+
+	    var digit = e.key.replace(/\D/g, '');
+
+	    var value = $(this).val().replace(/\D/g, '');
+
+	    var size = value.concat(digit).length;
+
+	    $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
+	});
+	
+	</script>
+</th:block>
 </html>
