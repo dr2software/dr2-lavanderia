@@ -19,7 +19,7 @@
 				       <div class="box box-info">
 				         
 				         <div class="box-header with-border">
-				           <h3 class="box-title">Consulta de Serviço(s)</h3>
+				           <h3 class="box-title">Consulta de Ordem(ns) Serviço(s)</h3>
 				         </div>
 				           
 			           	 <div class="box-body">
@@ -29,30 +29,34 @@
 			           	 		<thead>
 					                <tr>
 					                  <th>Código</th>
-					                  <th>Nome</th>
-					                  <th>Unidade</th>
-					                  <th>Valor</th>
-					                  <th>Data de cadastro</th>
+					                  <th>Cliente</th>
+					                  <th>Entrada</th>
+					                  <th>Situação</th>
+					                  <th>Serviços</th>
 					                  <th>Ações</th>
 					                </tr>
 					            </thead>
 					            
 					            <tbody>
-					            	<tr th:each="servico : ${servicos}"> 
-					            		<td> <span th:text="${servico.id}"></span> </td>
-					            		<td> <span th:text="${servico.nome}"></span> </td>
-					            		<td> <span th:text="${servico.unidadeMedida.name()}"></span> </td>
-					            		<td> <span th:text="${servico.valor}"></span> </td>
-					            		<td> <span th:text="${#dates.format(servico.dataCadastro.getTime(), 'dd/MM/yyyy')}"></span> </td>
+					            	<tr th:each="os : ${ordensServicos}"> 
+					            		<td> <span th:text="${os.id}"></span> </td>
+					            		<td> <span th:text="${os.cliente.nome}"></span> </td>
+					            		<td> <span th:text="${#dates.format(os.dataEntrada.getTime(), 'dd/MM/yyyy')}"></span> </td>
+					            		<td> <span th:text="${os.situacao.descricao}"></span> </td>
+					            		<td> <span th:text="${os.servicos.size()}"></span> </td>
 					            		<td>
-					            			<a th:href="@{'/servico/cadastro/'}+${servico.id}" 
-					            			   style="margin-right: 10px;" title="Editar">
+					            			<a th:href="@{'/servico/cadastro/'}+${os.id}" title="Editar">
 					            				<i class="fa fa-edit"></i>
 					            			</a>
-											<a th:href="@{'/servico/cadastro/excluir/'}+${servico.id}"
-												style="margin-left: 10px;" title="Excluir">
+											<a th:href="@{'/servico/cadastro/excluir/'}+${os.id}" 
+												style="margin-left: 10px; margin-right: 10px;" title="Excluir">
 												<i class="fa fa-remove"></i>
 											</a>
+											
+											<a th:href="@{'/servico/cadastro/excluir/'}+${os.id}" title="Excluir">
+												<i class="fa fa-file-pdf-o"></i>
+											</a>
+											
 					            		</td>
 					            	</tr>
 					            </tbody>   

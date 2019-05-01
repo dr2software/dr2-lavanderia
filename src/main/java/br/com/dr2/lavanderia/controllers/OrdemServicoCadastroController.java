@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,8 +47,9 @@ public class OrdemServicoCadastroController {
 
 	@PostMapping
 	public ModelAndView salvar(@Valid OrdemServico ordemServico) {
-		ModelAndView mav = new ModelAndView("ordem-servico/cadastro");
+		ModelAndView mav = new ModelAndView("redirect:/ordem-servico/consulta");
 		if (ordemServico.getId() == 0) {
+			ordemServico.setServicos(getServicosOS());
 			osService.inserir(ordemServico);
 		} else {
 			osService.atualizar(ordemServico);
@@ -75,13 +77,13 @@ public class OrdemServicoCadastroController {
 		return mav;
 	}
 	
-	@DeleteMapping("/excluir-servico-os/{id}")
-	public ModelAndView removerServicoOS(){
-		
+	@DeleteMapping("/excluir-servico-os/{index}")
+	public ModelAndView removerServicoOS(@PathVariable int index){
 		ModelAndView mav = new ModelAndView("ordem-servico/cadastro :: grid-servicos_os");
-		
+		if(!getServicosOS().isEmpty()) {
+			getServicosOS().remove(index);
+		}
 		return mav;
-		
 	}
 
 	@GetMapping("/grid-servicos")
