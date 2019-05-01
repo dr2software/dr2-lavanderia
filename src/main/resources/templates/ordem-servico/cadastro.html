@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html layout:decorator="~{fragments/layout}"
+	  xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body>
+		
+		<div layout:fragment="content">
+		     <!-- Main content -->
+    		<section class="content">
+    			 <div class="row">
+   				     <div class="col-md-12">
+				       <div class="box box-info">
+				         
+				         <div class="box-header with-border">
+				           <h3 class="box-title">Cadastro de Ordem de Serviço</h3>
+				         </div>
+				           
+				           <div class="box-body">
+				           	
+				          	 <form action="#" th:method="POST"
+				          	 		th:object="${ordemServico}" th:action="@{/ordem-servico/cadastro}">
+				          	 		
+				          	 <input type="hidden" th:field="*{id}">
+				          	 
+				          	 	<div class="form-row">
+				          	 		<div class="form-group col-md-6">
+					                    <label for="cliente">Cliente:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-user"></i></span>
+							               <select class="form-control" id="cliente" name="cliente"
+							               		   th:field="*{cliente}">
+							               <option value="" selected>Selecione...</option>
+							               <option
+							               		th:each="cliente : ${clientes}"
+							               		th:value="${cliente.id}"
+							               		th:text="${cliente.nome}">
+							               </option>
+						                  </select>
+							             </div>
+									</div>
+									
+									<div class="form-group col-md-6">
+					                    <label for="situacao">Situacao:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
+							               <select class="form-control" th:field="*{situacao}">
+							                <option
+							               		th:each="situacao : ${situacoes}"
+							               		th:value="${situacao.name()}"
+							               		th:text="${situacao.descricao}">
+							               	</option>
+						                  </select>
+							             </div>
+									</div>
+									
+				          	 	</div>
+				          	 	
+				          	 	<div class="form-row">
+				          	 	
+				          	 		<div class="form-group col-md-3">
+					                    <label for="dataEntrada">Data da entrada:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+							               <input type="date" id="dataEntrada" name="dataEntrada" th:field="*{dataEntrada}"
+							               		  class="form-control">
+							             </div>
+									</div>
+									
+									<div class="form-group col-md-3">
+					                    <label for="horaEntrada">Hora da entrada:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-hourglass-2"></i></span>
+							               <input type="time" id="horaEntrada" name="horaEntrada" th:field="*{horaEntrada}" 
+							               		  class="form-control">
+							             </div>
+									</div>
+									
+									<div class="form-group col-md-3">
+					                    <label for="dataSaida">Data da saída:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+							               <input type="date" id="dataSaida" name="dataSaida" th:field="*{dataSaida}" 
+							               		  class="form-control">
+							             </div>
+									</div>
+										
+									<div class="form-group col-md-3">
+					                    <label for="horaSaida">Hora da saída:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-hourglass-2"></i></span>
+							               <input type="time" id="horaSaida" name="horaSaida" th:field="*{horaSaida}" 
+							               		  class="form-control">
+							             </div>
+									</div>
+									
+								</div>
+								
+								 <div class="box-header with-border">
+						           <h3 class="box-title">Serviços</h3>
+						         </div>
+						         
+						         <div class="form-row">
+						         	
+						         	<input type="hidden" id="servicoId" name="servicoId">
+						         	<input type="hidden" id="unidade" name="unidade">
+						         	
+						         	<div class="form-group col-md-1">
+						         		<div class="row">
+							             	<button type="button" class="btn btn-primary"
+												    style="margin-top: 25px;" data-toggle="modal" data-target="#modal-default">
+												    <i class="fa fa-search"></i> Buscar
+											</button>
+							             </div>
+									</div>
+						         
+						         	<div class="form-group col-md-5">
+					                    <label for="situacao">Serviço:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
+							               <input type="text" id="servico" name="servico"
+							               		  readonly="readonly" class="form-control">
+							             </div>
+									</div>
+									
+									<div class="form-group col-md-2">
+					                    <label for="ValorServico">Valor:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+							               <input type="number" id="valorServico" name="valorServico"
+							               		  readonly="readonly" class="form-control">
+							             </div>
+									</div>
+									
+									<div class="form-group col-md-2">
+					                    <label for="quantidadeServico">Quantidade:</label>
+					                    <div class="input-group">
+							               <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span>
+							               <input type="number" id="quantidadeServico" name="quantidadeServico"
+							               		  class="form-control">
+							             </div>
+									</div>
+									
+									<div class="form-group col-md-1">
+						         		<div class="row">
+							             	<button type="button"  id="btnAdicionar"
+							             			class="btn btn-primary" style="margin-top: 25px;">
+							             			<i class="fa fa-plus"></i> Adicionar
+							             	</button>
+							             </div>
+									</div>
+									
+						         </div>
+						         
+						         <div id="grid-servicos_os"
+						         	  th:fragment="grid-servicos_os">
+						         	  
+							         <table id="table-grid-servicos-os" class="table table-bordered table-hover">
+							         	
+							         	<thead>
+							                <tr>
+							                  <th>Serviço</th>
+							                  <th>Valor unit.</th>
+							                  <th>Quantidade</th>
+							                  <th>Valor total</th>
+							                  <th>Remover</th>
+							                </tr>
+							            </thead>
+							            
+							            <tbody>
+							            	
+							            	<tr th:each="servicoOS : ${servicosOS}">
+							            		<td> <span th:text="${servicoOS.servico.nome}"></span> </td>
+							            		<td> <span th:text="${servicoOS.servico.valor}"></span> </td>
+							            		<td>
+							            			<span th:text="${servicoOS.quantidadeServicos}"></span>
+							            		</td>
+							            		<td> <span th:text="${servicoOS.servico.valor * servicoOS.quantidadeServicos}"></span> </td>
+							            		<td style="text-align: center;">
+							            			<a th:href="@{'/ordem-servico/cadastro/excluir-servico-os/'}+${servicoOS.id}" title="Excluir">
+														<i class="fa fa-remove"></i>
+													</a>
+							            		</td>	            		
+							            	</tr>
+							            	
+							            </tbody>
+							            
+							         </table>
+						       </div>
+						       
+				          	 	<div style="margin-top: 10px;">
+					          	 	<div class="row">
+					          	 		<div class="col-md-12">
+					          	 			<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
+					          	 		</div>
+					          	 	</div>
+				          	 	</div>
+				          	 	
+				          	 </form>
+				           </div><!-- ./box-body -->
+				       </div>
+				     </div>  
+    			 </div>
+    			 
+    			 <!-- Modal Serviços -->
+    			 <div class="modal fade" id="modal-default">
+		          <div class="modal-dialog">
+		            <div class="modal-content">
+		              <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                <span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title">Serviços</h4>
+		              </div>
+		              <div class="modal-body">
+		              
+		                <table id="grid-servicos" class="table table-bordered table-hover">	
+		           	 		<thead>
+				                <tr>
+				                  <th>Código</th>
+				                  <th>Nome</th>
+				                  <th>Unidade</th>
+				                  <th>Valor</th>
+				                </tr>
+				            </thead>
+				            
+				            <tbody>
+				            	<tr th:each="servico : ${servicos}"  onclick="selecionarServico(this)" > 
+				            		<td> <span th:text="${servico.id}"></span> </td>
+				            		<td> <span th:text="${servico.nome}"></span> </td>
+				            		<td> <span th:text="${servico.unidadeMedida.name()}"></span> </td>
+				            		<td> <span th:text="${servico.valor}"></span> </td>
+				            	</tr>
+				            </tbody>   
+		           	 	</table>
+		              </div>
+		              <!-- <div class="modal-footer">
+		                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+		                <button type="button" class="btn btn-primary">Save changes</button>
+		              </div> -->
+		            </div>
+		          </div>
+		        </div><!-- /.modal serviços-->
+    		</section>
+		</div><!-- / .content -->	
+		<th:block layout:fragment="script">
+		
+	    	<script>
+	    	
+	    		$("#btnAdicionar").click(function(event){
+	    			
+	    			let id = document.getElementById('servicoId').value
+	    			let servico = document.getElementById('servico').value
+	    			let unidade = document.getElementById('unidade').value
+	    			let valor = document.getElementById('valorServico').value
+	    			let quantidade = document.getElementById('quantidadeServico').value
+	    			
+	    			$.ajax({
+	    				type: "POST",
+	    				url: "/ordem-servico/cadastro/adicionar-servico",
+	    				dataType: 'text',
+	    				data: {id: id,nome: servico,valor: valor,quantidade: quantidade},
+	    				success: function(data){
+	    					$("#grid-servicos_os").load("/ordem-servico/cadastro/grid-servicos");
+	    				},
+	    				error : function(requestObject, error, errorThrown){
+	    					 alert(error);
+	    			         alert(errorThrown);
+	    				}
+	    			})
+	    		})
+	    		
+	    		function calcularTotal(row){
+	    			let rowIndex =  row.rowIndex
+	    			let table = document.getElementById('table-grid-servicos-os')
+	    			let valorUni = table.rows[rowIndex].cells[1].innerHTML.replace(/<\/?span[^>]*>/g,"")
+	    			var value = $(table.rows[rowIndex].cells[2]).find("input").val();
+	    			let valorTotal = table.rows[rowIndex].cells[3].innerHTML.replace(/<\/?span[^>]*>/g,"")
+	    			alert(valorUni+' - '+value+' - '+valorTotal);
+	    		}
+	    	
+	    		function selecionarServico(row){
+	    			let table = document.getElementById('grid-servicos')
+	    			let rowIndex =  row.rowIndex
+	    			let id = table.rows[rowIndex].cells[0].innerHTML.replace(/<\/?span[^>]*>/g,"")
+	    			let nome = table.rows[rowIndex].cells[1].innerHTML.replace(/<\/?span[^>]*>/g,"")
+	    			let unidade = table.rows[rowIndex].cells[2].innerHTML.replace(/<\/?span[^>]*>/g,"")
+	    			let valor = table.rows[rowIndex].cells[3].innerHTML.replace(/<\/?span[^>]*>/g,"")
+	    			
+	    			document.getElementById('servicoId').value = id;
+	    			document.getElementById('servico').value = nome;
+	    			document.getElementById('unidade').value = unidade;
+	    			document.getElementById('valorServico').value = parseInt(valor);
+	    			$('#modal-default').modal('hide');
+	    		}
+	    		
+		    	$(function () {
+		    	    $('#grid-servicos').DataTable({
+		    	      'paging'      : true,
+		    	      'lengthChange': true,
+		    	      'searching'   : true,
+		    	      'ordering'    : true,
+		    	      'info'        : true,
+		    	      'autoWidth'   : false
+		    	    })
+		    	})
+		    	  	
+	        </script>
+	         	        
+    	</th:block>
+		
+	</body>
+	
+</html>
