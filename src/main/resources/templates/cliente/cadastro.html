@@ -30,7 +30,7 @@
 						<div class="box-body">
 
 							<form action="#" th:method="POST" th:object="${cliente}"
-								th:action="@{/cliente/cadastro}">
+								th:action="@{/cliente/cadastro}" >
 
 								<input type="hidden" id="id" name="id" th:field="*{id}">
 								<div class="form-row">
@@ -49,8 +49,9 @@
 										<label for="cpfOuCnpj">CPF/CNPJ:</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i
-												class="fa fa-address-card .ls-mask-cpf"></i></span> <input type="text" id="cpfcnpj"
-												name="cpf" class="form-control" th:field="*{cpf}" data-mask-for-cpf-cnpj>
+												class="fa fa-address-card .ls-mask-cpf"></i></span> <input
+												type="text" id="cpfcnpj" name="cpf" class="form-control"
+												th:field="*{cpf}" data-mask-for-cpf-cnpj>
 										</div>
 									</div>
 								</div>
@@ -61,7 +62,7 @@
 										<div class="input-group">
 											<span class="input-group-addon"><i
 												class="fa fa-asterisk"></i></span> <input type="email" id="email"
-												name="email" class="form-control" th:field="*{email}">
+												name="email" class="form-control" th:field="*{email}" required=>
 										</div>
 									</div>
 
@@ -81,13 +82,14 @@
 											<span class="input-group-addon"><i
 												class="fa fa-asterisk"></i></span> <input type="tel" id="celular"
 												name="celular" class="form-control" th:field="*{celular}"
-												data-mask="(99)99999-9999">
+												data-mask="(99)99999-9999" required="required">
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<button type="submit" class="btn btn-primary">
+										<button type="submit" class="btn btn-primary"
+											>
 											<i class="fa fa-save"></i> Salvar
 										</button>
 									</div>
@@ -103,20 +105,25 @@
 	</div>
 	<!-- / .content -->
 </body>
-<th:block layout:fragment="script">  <script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script> 
+<th:block layout:fragment="script">
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 	<script>
-	$(document).on('keydown', '[data-mask-for-cpf-cnpj]', function (e) {
+		$(document).on(
+				'keydown',
+				'[data-mask-for-cpf-cnpj]',
+				function(e) {
 
-	    var digit = e.key.replace(/\D/g, '');
+					var digit = e.key.replace(/\D/g, '');
 
-	    var value = $(this).val().replace(/\D/g, '');
+					var value = $(this).val().replace(/\D/g, '');
 
-	    var size = value.concat(digit).length;
+					var size = value.concat(digit).length;
 
-	    $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
-	});
-	
+					$(this).mask(
+							(size <= 11) ? '000.000.000-00'
+									: '00.000.000/0000-00');
+				});
 	</script>
 </th:block>
 </html>
