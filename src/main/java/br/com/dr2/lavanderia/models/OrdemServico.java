@@ -44,7 +44,7 @@ public class OrdemServico extends EntidadeBase implements Serializable {
 		return cliente;
 	}
 
-	@OneToMany(mappedBy="ordemServico", cascade = {CascadeType.ALL})
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="ordemServico", cascade = {CascadeType.ALL})
 	public List<ServicoOS> getServicos() {
 		return servicos;
 	}

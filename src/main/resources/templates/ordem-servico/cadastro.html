@@ -174,7 +174,7 @@
 							            
 							            <tbody>
 							            	
-							            	<tr th:each="servicoOS : ${servicosOS}">
+							            	<tr th:each="servicoOS,iterator : ${servicosOS}">
 							            		<td> <span th:text="${servicoOS.servico.nome}"></span> </td>
 							            		<td> <span th:text="${servicoOS.servico.valor}"></span> </td>
 							            		<td>
@@ -182,7 +182,7 @@
 							            		</td>
 							            		<td> <span th:text="${servicoOS.servico.valor * servicoOS.quantidadeServicos}"></span> </td>
 							            		<td style="text-align: center;">
-							            			<a th:href="@{'/ordem-servico/cadastro/excluir-servico-os/'}+${servicoOS.id}" title="Excluir">
+							            			<a  class="btn btn-primary btn-sm" th:onclick="'javascript:removerServicoOS(' + ${iterator.index} + ')'" title="Excluir">
 														<i class="fa fa-remove"></i>
 													</a>
 							            		</td>	            		
@@ -250,6 +250,20 @@
 		<th:block layout:fragment="script">
 		
 	    	<script>
+	    	
+	    		function removerServicoOS(index){
+	    			$.ajax({
+	    				type: "DELETE",
+	    				url: "/ordem-servico/cadastro//excluir-servico-os/"+index,
+	    				success: function(data){
+	    					$("#grid-servicos_os").load("/ordem-servico/cadastro/grid-servicos");
+	    				},
+	    				error : function(requestObject, error, errorThrown){
+	    					 alert(error);
+	    			         alert(errorThrown);
+	    				}
+	    			})		
+	    		}
 	    	
 	    		$("#btnAdicionar").click(function(event){
 	    			

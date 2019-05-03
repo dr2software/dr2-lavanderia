@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.dr2.lavanderia.exception.ObjetoNaoEncontradoException;
 import br.com.dr2.lavanderia.models.OrdemServico;
 import br.com.dr2.lavanderia.models.Servico;
 import br.com.dr2.lavanderia.models.ServicoOS;
@@ -46,10 +48,12 @@ public class OrdemServicoCadastroController {
 
 	@PostMapping
 	public ModelAndView salvar(@Valid OrdemServico ordemServico) {
-		ModelAndView mav = new ModelAndView("ordem-servico/cadastro");
+		ModelAndView mav = new ModelAndView("redirect:/ordem-servico/consulta");
 		if (ordemServico.getId() == 0) {
+			ordemServico.setServicos(getServicosOS());
 			osService.inserir(ordemServico);
 		} else {
+			ordemServico.setServicos(getServicosOS());
 			osService.atualizar(ordemServico);
 		}
 		adicionarDadosPadrao(mav, null);
@@ -70,24 +74,36 @@ public class OrdemServicoCadastroController {
 		servico.setNome(nome);
 		servico.setValor(valor);
 		servicoOS.setQuantidadeServicos(quantidade);
-		servicoOS.setServico(servico);
+		servicoOS.setServico(servico);		
 		getServicosOS().add(servicoOS);
 		return mav;
 	}
 	
-	@DeleteMapping("/excluir-servico-os/{id}")
-	public ModelAndView removerServicoOS(){
-		
+	@DeleteMapping("/excluir-servico-os/{index}")
+	public ModelAndView removerServicoOS(@PathVariable int index){
 		ModelAndView mav = new ModelAndView("ordem-servico/cadastro :: grid-servicos_os");
-		
+		if(!getServicosOS().isEmpty()) {
+			getServicosOS().remove(index);
+		}
 		return mav;
-		
 	}
 
 	@GetMapping("/grid-servicos")
 	public ModelAndView griServicosOS() {
 		ModelAndView mav = new ModelAndView("/ordem-servico/cadastro :: grid-servicos_os");
 		mav.addObject("servicosOS", getServicosOS());
+		return mav;
+	}
+	
+	@GetMapping("/{id}")
+	public ModelAndView carregar(@PathVariable int id) {
+		ModelAndView mav = new ModelAndView("ordem-servico/cadastro");
+		try {
+			OrdemServico os = osService.buscarPorId(id) ;
+			adicionarDadosPadrao(mav, os);
+		} catch (ObjetoNaoEncontradoException e) {
+			e.printStackTrace();
+		}
 		return mav;
 	}
 
@@ -99,8 +115,13 @@ public class OrdemServicoCadastroController {
 		mav.addObject("situacoes", Arrays.asList(TipoSituacao.values()));
 		mav.addObject("clientes", clienteService.buscarTodos());
 		mav.addObject("servicos", servicoService.buscarTodos());
+		if(ordemServico.getServicos() == null || ordemServico.getServicos().isEmpty()) {
+			mav.addObject("servicosOS", getServicosOS());
+		}else {
+			mav.addObject("servicosOS", ordemServico.getServicos());
+			setServicosOS(ordemServico.getServicos());
+		}
 		mav.addObject("ordemServico", ordemServico);
-		
 	}
 
 	private List<ServicoOS> getServicosOS() {
