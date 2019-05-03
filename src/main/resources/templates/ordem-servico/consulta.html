@@ -45,7 +45,7 @@
 					            		<td> <span th:text="${os.situacao.descricao}"></span> </td>
 					            		<td> <span th:text="${os.servicos.size()}"></span> </td>
 					            		<td>
-					            			<a th:href="@{'/servico/cadastro/'}+${os.id}" title="Editar">
+					            			<a th:href="@{'/ordem-servico/cadastro/'}+${os.id}" title="Editar">
 					            				<i class="fa fa-edit"></i>
 					            			</a>
 											<a th:href="@{'/servico/cadastro/excluir/'}+${os.id}" 
@@ -53,7 +53,8 @@
 												<i class="fa fa-remove"></i>
 											</a>
 											
-											<a th:href="@{'/servico/cadastro/excluir/'}+${os.id}" title="Excluir">
+											<a th:href="@{'/ordem-servico/consulta/pdf-os/'}+${os.id}" 
+											    th:target="_blank" title="PDF">
 												<i class="fa fa-file-pdf-o"></i>
 											</a>
 											

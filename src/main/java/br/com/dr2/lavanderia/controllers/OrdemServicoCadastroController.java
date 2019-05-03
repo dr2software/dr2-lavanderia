@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.dr2.lavanderia.exception.ObjetoNaoEncontradoException;
 import br.com.dr2.lavanderia.models.OrdemServico;
 import br.com.dr2.lavanderia.models.Servico;
 import br.com.dr2.lavanderia.models.ServicoOS;
@@ -52,6 +53,7 @@ public class OrdemServicoCadastroController {
 			ordemServico.setServicos(getServicosOS());
 			osService.inserir(ordemServico);
 		} else {
+			ordemServico.setServicos(getServicosOS());
 			osService.atualizar(ordemServico);
 		}
 		adicionarDadosPadrao(mav, null);
@@ -72,7 +74,7 @@ public class OrdemServicoCadastroController {
 		servico.setNome(nome);
 		servico.setValor(valor);
 		servicoOS.setQuantidadeServicos(quantidade);
-		servicoOS.setServico(servico);
+		servicoOS.setServico(servico);		
 		getServicosOS().add(servicoOS);
 		return mav;
 	}
@@ -92,6 +94,18 @@ public class OrdemServicoCadastroController {
 		mav.addObject("servicosOS", getServicosOS());
 		return mav;
 	}
+	
+	@GetMapping("/{id}")
+	public ModelAndView carregar(@PathVariable int id) {
+		ModelAndView mav = new ModelAndView("ordem-servico/cadastro");
+		try {
+			OrdemServico os = osService.buscarPorId(id) ;
+			adicionarDadosPadrao(mav, os);
+		} catch (ObjetoNaoEncontradoException e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 
 	private void adicionarDadosPadrao(ModelAndView mav, OrdemServico ordemServico) {
 		if (ordemServico == null) {
@@ -101,8 +115,13 @@ public class OrdemServicoCadastroController {
 		mav.addObject("situacoes", Arrays.asList(TipoSituacao.values()));
 		mav.addObject("clientes", clienteService.buscarTodos());
 		mav.addObject("servicos", servicoService.buscarTodos());
+		if(ordemServico.getServicos() == null || ordemServico.getServicos().isEmpty()) {
+			mav.addObject("servicosOS", getServicosOS());
+		}else {
+			mav.addObject("servicosOS", ordemServico.getServicos());
+			setServicosOS(ordemServico.getServicos());
+		}
 		mav.addObject("ordemServico", ordemServico);
-		
 	}
 
 	private List<ServicoOS> getServicosOS() {

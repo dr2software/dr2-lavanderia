@@ -1,8 +1,11 @@
 package br.com.dr2.lavanderia.controllers;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,4 +24,10 @@ public class OrdemServicoConsultaController {
 		mav.addObject("ordensServicos", ordemServicoService.buscarTodos());
 		return mav;
 	}
+
+	@GetMapping("/pdf-os/{id}")
+	public void gerarPDF(@PathVariable int id, HttpServletResponse response) {
+		ordemServicoService.gerarPDF(id, response);
+	}
+	
 }
